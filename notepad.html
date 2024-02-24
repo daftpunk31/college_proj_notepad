@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.notepad{
+	position: relative;
+}
+#outer
+{
+    width:100%;
+}
+.inner
+{
+display: inline-block;
+}
+
+button{
+background-color: white;
+border: 0px;
+}
+
+p{
+margin: 0px;
+font-size: 2rem;
+}
+
+.navbarcontent{
+display: inline-block;
+}
+p.navbarcontent{
+color: white;
+}
+
+.navbar{
+background-color: green;
+}
+
+body{
+height:100%;
+
+}
+
+textarea{
+height: 100vh;
+width: 100%;
+border: 0px;
+font-size: 18px;
+}
+.watermark{
+	position: absolute;
+	z-index: 1;
+	left: 45%;
+	top: 20%;
+	opacity: 0.3;
+}
+
+</style>
+<script language="javascript">
+function eraseText() {
+    document.getElementById("output").value = "";
+}
+
+function download(data, filename, type) {
+	var data = copy_data();
+	var file = new Blob([data], {type: type});
+	if (window.navigator.msSaveOrOpenBlob) // IE10+
+			window.navigator.msSaveOrOpenBlob(file, filename);
+	else { // Others
+			var a = document.createElement("a"),
+							url = URL.createObjectURL(file);
+			a.href = url;
+			a.download = filename;
+			document.body.appendChild(a);
+			a.click();
+			setTimeout(function() {
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);  
+			}, 0); 
+	}
+}
+
+
+function copy_data(){
+	copied_data = document.getElementById("output").value;
+	return copied_data;
+}
+
+
+</script>
+</head>
+
+<body>
+<div class="notepad">
+	<div class="navbar">
+	<img class="navbarcontent" src="notepad_icon.jpg" alt="Icon of Notepad" width="40" height="35">
+	<p class="navbarcontent">Notepad</p>
+	</div>
+	<div id="outer dropdown">
+  		<button class="inner fileBtn dropbtn" onclick="window.open('notepad.html', '_blank'); return false;">New File</button>
+			<!--
+
+				<a href="/Users/prakash/Library/CloudStorage/GoogleDrive-suryaprakashk747@gmail.com/My Drive/mac20/cloud_codes/web_dev_course/notepad.html" style="text-decoration:none" target="_blank">New File</a>
+
+  		<button  class="inner editBtn dropbtn">Edit</button>
+  		<button class="inner formatBtn dropbtn">Format</button>
+		<button class="inner viewBtn dropbtn">View</button>
+		<button class="inner helpBtn dropbtn">Help</button>
+			-->
+		<button class="inner saveBtn dropbtn" type="button" onclick="download('data', 'filename','type')">Save as</button>
+		<button class="inner resetBtn dropbtn" type="button" onclick="eraseText()">Reset</button>
+	</div>
+	<hr>
+	<div class="watermark">
+		<img src="mvsr_logo.png" alt="Water mark of mvsr logo" width="300px" height="250px">
+	</div>
+	<div>
+	<textarea id ="output" class="textarea output"></textarea>
+	</div>
+</div>
+
+</body>
+
+</html>
